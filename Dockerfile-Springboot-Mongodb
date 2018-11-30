@@ -1,0 +1,6 @@
+FROM alpine-jdk:base
+MAINTAINER volkswagen
+COPY target/springboot-mongodb-0.0.1-SNAPSHOT.jar /opt/lib/
+COPY shell/Springboot-Mongodb-entrypoint.sh /opt/bin/Springboot-Mongodb-entrypoint.sh
+RUN chmod 755 /opt/bin/Springboot-Mongodb-entrypoint.sh
+EXPOSE 8080

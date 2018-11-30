@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+  mymongo:
+    container_name: mongodb
+    build: ./docker/images/mongodb
+    image: mongodb:latest
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+  springboot-mongodb:
+    build:
+      context: .
+      dockerfile: Dockerfile-Springboot-Mongodb
+    entrypoint: /opt/bin/Springboot-Mongodb-entrypoint.sh
+    image: springboot-mongodb:latest
+    environment:
+      - SERVER_PORT=8080
+      - MONGODB_URI=mongodb://mymongo:27017/customer
+      - MONGODB_STATUS_HOST=mymongo
+      - MONGODB_STATUS_PORT=27017
+    ports:
+      - 8080:8080
+    command: mvn clean spring-boot:run
+    links:
+      - mymongo:mymongo
+    depends_on:
+      - mymongo
+
+      
