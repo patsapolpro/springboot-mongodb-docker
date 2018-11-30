@@ -1,4 +1,3 @@
-# springboot-mongodb-docker
 # Docker Compose with Spring Boot, Spring Data MongoDB
 
 ## What you'll build
